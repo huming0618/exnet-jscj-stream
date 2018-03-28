@@ -3,6 +3,7 @@
 import requests
 import json
 from bs4 import BeautifulSoup as BS
+import jieba
 
 # http://www.jinse.com/lives
 # http://www.jinse.com/ajax/lives/getList?search=&id=19043&flag=down
@@ -37,6 +38,7 @@ def getFirstID():
 
 def fetch_list(fromId):
     url = 'http://www.jinse.com/ajax/lives/getList?search=&id=%s&flag=down' % (fromId)
+    print(url)
     session = requests.Session()
     
     headers = {
@@ -63,7 +65,8 @@ def fetch_list(fromId):
             # down_counts
             # source_url
             print(newsItem['content'])
-
+            seg_list = jieba.cut(newsItem['content']) 
+            print(", ".join(seg_list))
 
 def fetch():
     topId = getFirstID()
